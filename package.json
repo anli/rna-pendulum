@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "cq": "codeclimate analyze -f html > code-quality.html src && open code-quality.html",
     "ci:test": "npm run lint && npm run test -- --coverage",
     "e2e:release": "detox build -c android.emu.release && detox test -c android.emu.release",
     "e2e": "detox build -c android.emu.debug && detox test -c android.emu.debug",

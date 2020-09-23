@@ -1,0 +1,41 @@
+skip_docs
+
+fastlane_require 'dotenv'
+
+platform :android do
+  desc "Create a build"
+  lane :build do |options|
+    Dotenv.overload '../.env'
+
+    file = getFolderPath().concat(ENV['ANDROID_STORE_FILE'])
+
+    gradle(
+      task: 'clean',
+      project_dir: 'android/'
+    )
+
+    gradle(      
+      task: 'bundle',
+      build_type: 'Release',
+      project_dir: 'android/',
+      properties: {
+        "android.injected.signing.store.file" => file,
+        "android.injected.signing.store.password" => ENV['ANDROID_STORE_PASSWORD'],
+        "android.injected.signing.key.alias" => ENV['ANDROID_KEY_ALIAS'],
+        "android.injected.signing.key.password" => ENV['ANDROID_KEY_PASSWORD'],
+      },
+      print_command_output: false,
+      print_command: true
+    )
+
+    puts "ABB: #{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}"
+  end
+
+end
+
+lane :getFolderPath do
+  sh(
+    command: 'cd ../ && pwd',
+    log: true
+  ).chomp.concat('/')
+end

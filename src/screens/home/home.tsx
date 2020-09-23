@@ -27,66 +27,102 @@ const HomeScreen = () => {
     <Screen>
       <Top>
         <PurpleSection>
-          <Hourglass
-            testID="Purple.Hourglass.Top"
-            icon={getIconByStatus(topTimerPurple.status)}
-            color={Colors.purple100}
-            size={48}
-            disabled={topTimerPurple.status !== 'EMPTY'}
-            onPress={topTimerPurple.start}
-          />
-
-          <Hourglass
-            testID="Purple.Hourglass.Bottom"
-            icon={getIconByStatus(bottomTimerPurple.status)}
-            color={Colors.purple100}
-            size={48}
-            disabled={bottomTimerPurple.status !== 'EMPTY'}
-            onPress={bottomTimerPurple.start}
-          />
-          <Countdown>{getMinSec(countdownPurple)}</Countdown>
+          <Row>
+            {topTimerPurple.status !== 'FULL' && (
+              <>
+                <Hourglass
+                  testID="Purple.Hourglass.Top"
+                  icon={getIconByStatus(topTimerPurple.status)}
+                  color={Colors.white}
+                  size={48}
+                  disabled={topTimerPurple.status !== 'EMPTY'}
+                  onPress={topTimerPurple.start}
+                />
+                <Countdown>{getMinSec(countdownBlack)}</Countdown>
+              </>
+            )}
+          </Row>
+          <Row>
+            {bottomTimerPurple.status !== 'FULL' && (
+              <>
+                <Hourglass
+                  testID="Purple.Hourglass.Bottom"
+                  icon={getIconByStatus(bottomTimerPurple.status)}
+                  color={Colors.white}
+                  size={48}
+                  disabled={bottomTimerPurple.status !== 'EMPTY'}
+                  onPress={bottomTimerPurple.start}
+                />
+                <Countdown>{getMinSec(countdownPurple)}</Countdown>
+              </>
+            )}
+          </Row>
         </PurpleSection>
 
         <GreenSection>
-          <Hourglass
-            testID="Green.Hourglass.Top"
-            icon={getIconByStatus(topTimerGreen.status)}
-            color={Colors.green100}
-            size={48}
-            disabled={topTimerGreen.status !== 'EMPTY'}
-            onPress={topTimerGreen.start}
-          />
-
-          <Hourglass
-            testID="Green.Hourglass.Bottom"
-            icon={getIconByStatus(bottomTimerGreen.status)}
-            color={Colors.green100}
-            size={48}
-            disabled={bottomTimerGreen.status !== 'EMPTY'}
-            onPress={bottomTimerGreen.start}
-          />
-          <Countdown>{getMinSec(countdownGreen)}</Countdown>
+          <Row>
+            {topTimerGreen.status !== 'FULL' && (
+              <>
+                <Hourglass
+                  testID="Green.Hourglass.Top"
+                  icon={getIconByStatus(topTimerGreen.status)}
+                  color={Colors.white}
+                  size={48}
+                  disabled={topTimerGreen.status !== 'EMPTY'}
+                  onPress={topTimerGreen.start}
+                />
+                <Countdown>{getMinSec(countdownBlack)}</Countdown>
+              </>
+            )}
+          </Row>
+          <Row>
+            {bottomTimerGreen.status !== 'FULL' && (
+              <>
+                <Hourglass
+                  testID="Green.Hourglass.Bottom"
+                  icon={getIconByStatus(bottomTimerGreen.status)}
+                  color={Colors.white}
+                  size={48}
+                  disabled={bottomTimerGreen.status !== 'EMPTY'}
+                  onPress={bottomTimerGreen.start}
+                />
+                <Countdown>{getMinSec(countdownGreen)}</Countdown>
+              </>
+            )}
+          </Row>
         </GreenSection>
       </Top>
       <BlackSection>
-        <Hourglass
-          testID="Black.Hourglass.Top"
-          icon={getIconByStatus(topTimerBlack.status)}
-          color={Colors.green100}
-          size={48}
-          disabled={topTimerBlack.status !== 'EMPTY'}
-          onPress={topTimerBlack.start}
-        />
-
-        <Hourglass
-          testID="Black.Hourglass.Bottom"
-          icon={getIconByStatus(bottomTimerBlack.status)}
-          color={Colors.green100}
-          size={48}
-          disabled={bottomTimerBlack.status !== 'EMPTY'}
-          onPress={bottomTimerBlack.start}
-        />
-        <Countdown>{getMinSec(countdownBlack)}</Countdown>
+        <Row>
+          {topTimerBlack.status !== 'FULL' && (
+            <>
+              <Hourglass
+                testID="Black.Hourglass.Top"
+                icon={getIconByStatus(topTimerBlack.status)}
+                color={Colors.white}
+                size={48}
+                disabled={topTimerBlack.status !== 'EMPTY'}
+                onPress={topTimerBlack.start}
+              />
+              <Countdown>{getMinSec(countdownBlack)}</Countdown>
+            </>
+          )}
+        </Row>
+        <Row>
+          {bottomTimerBlack.status !== 'FULL' && (
+            <>
+              <Hourglass
+                testID="Black.Hourglass.Bottom"
+                icon={getIconByStatus(bottomTimerBlack.status)}
+                color={Colors.white}
+                size={48}
+                disabled={bottomTimerBlack.status !== 'EMPTY'}
+                onPress={bottomTimerBlack.start}
+              />
+              <Countdown>{getMinSec(countdownBlack)}</Countdown>
+            </>
+          )}
+        </Row>
       </BlackSection>
     </Screen>
   );
@@ -123,6 +159,13 @@ const Top = styled.View`
 const Countdown = styled.Text`
   margin-left: 24px;
   margin-right: 24px;
+  color: ${Colors.white};
+`;
+
+const Row = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const Hourglass = styled(IconButton)``;

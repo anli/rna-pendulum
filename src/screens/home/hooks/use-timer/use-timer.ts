@@ -1,36 +1,27 @@
 import {useState} from 'react';
 import useCountdown from './use-countdown';
 
-export type Status = 'FULL' | 'EMPTY' | 'RUNNING';
+export type Status = 'FULL' | 'RUNNING';
 
 const useTimer = (countdownSecond: number) => {
-  const [topStatus, setTopStatus] = useState<Status>('FULL');
-  const [bottomStatus, setBottomStatus] = useState<Status>('EMPTY');
   const {time: countdown, start} = useCountdown(countdownSecond);
 
-  const topTimer = {
-    status: topStatus,
-    start: () => {
-      setTopStatus('RUNNING');
+  const [isTop, setIsTop] = useState<boolean>(true);
+  const [status, setStatus] = useState<Status>('FULL');
+
+  const timer = {
+    isTop,
+    status,
+    flip: () => {
+      setIsTop(!isTop);
+      setStatus('RUNNING');
       start(() => {
-        setTopStatus('FULL');
-        setBottomStatus('EMPTY');
+        setStatus('FULL');
       });
     },
   };
 
-  const bottomTimer = {
-    status: bottomStatus,
-    start: () => {
-      setBottomStatus('RUNNING');
-      start(() => {
-        setBottomStatus('FULL');
-        setTopStatus('EMPTY');
-      });
-    },
-  };
-
-  return {topTimer, bottomTimer, countdown};
+  return {timer, countdown};
 };
 
 export default useTimer;

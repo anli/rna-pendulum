@@ -5,26 +5,22 @@ import styled from 'styled-components/native';
 
 const FlipTracker = ({count}: {count: number}) => {
   const windowHeight = useWindowDimensions().height;
+  const trackers = [
+    {counter: 2, top: windowHeight / 16},
+    {counter: 1, top: windowHeight / 4},
+    {counter: 3, top: windowHeight / 4},
+  ];
+
   return (
     <FlipTrackerContainer>
-      <SecondTracker
-        icon={count < 2 ? 'circle' : 'circle-outline'}
-        color={Colors.white}
-        size={16}
-        top={windowHeight / 16}
-      />
-      <FirstTracker
-        icon={count < 1 ? 'circle' : 'circle-outline'}
-        color={Colors.white}
-        size={16}
-        top={windowHeight / 4}
-      />
-      <ThirdTracker
-        icon={count < 3 ? 'circle' : 'circle-outline'}
-        color={Colors.white}
-        size={16}
-        top={windowHeight / 4}
-      />
+      {trackers.map(({counter, top}) => (
+        <Tracker
+          icon={count < counter ? 'circle' : 'circle-outline'}
+          color={Colors.white}
+          size={16}
+          top={top}
+        />
+      ))}
     </FlipTrackerContainer>
   );
 };
@@ -33,14 +29,6 @@ export default FlipTracker;
 
 const FlipTrackerContainer = styled.View``;
 
-const FirstTracker = styled(IconButton)<{top: number}>`
-  top: ${({top}) => top + 'px'};
-`;
-
-const SecondTracker = styled(IconButton)<{top: number}>`
-  top: ${({top}) => top + 'px'};
-`;
-
-const ThirdTracker = styled(IconButton)<{top: number}>`
+const Tracker = styled(IconButton)<{top: number}>`
   top: ${({top}) => top + 'px'};
 `;

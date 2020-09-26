@@ -2,6 +2,7 @@ import {useState} from 'react';
 
 const useCountdown = (second: number) => {
   const [time, setTime] = useState<number>(second);
+  const [ticker, setTicker] = useState<NodeJS.Timeout | undefined>(undefined);
 
   const start = (callback: () => void) => {
     setTime(second);
@@ -13,14 +14,21 @@ const useCountdown = (second: number) => {
       setTime(diff);
 
       if (diff <= 0) {
+        setTicker(undefined);
         clearInterval(interval);
         setTime(second);
         callback();
       }
     }, 300);
+    setTicker(interval);
   };
 
-  return {time, start};
+  const reset = () => {
+    ticker && clearInterval(ticker);
+    setTime(second);
+  };
+
+  return {time, start, reset};
 };
 
 export default useCountdown;

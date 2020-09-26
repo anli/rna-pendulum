@@ -1,7 +1,8 @@
 import React from 'react';
 import {useWindowDimensions} from 'react-native';
+import {Button} from 'react-native-paper';
 import styled from 'styled-components/native';
-import {Timer} from './components';
+import {FlipTracker, Timer} from './components';
 import {useTimer} from './hooks';
 
 const HomeScreen = () => {
@@ -12,21 +13,31 @@ const HomeScreen = () => {
   const windowHeight = useWindowDimensions().height;
   const TOP_MARGIN_PER_TWO = windowHeight / 4;
 
+  const reset = () => {
+    timerPurple.reset();
+    timerGreen.reset();
+    timerBlack.reset();
+  };
+
   return (
     <Screen>
       <Top>
         <PurpleSection>
-          <Row
-            testID="Purple.Row"
-            top={timerPurple.isTop ? 0 : TOP_MARGIN_PER_TWO}
-            totalCount={2}>
-            <Timer
-              testID="Purple.Timer"
-              status={timerPurple.status}
-              onPress={timerPurple.flip}
-              countdown={countdownPurple}
-            />
-          </Row>
+          <FlipTracker count={timerPurple.flipCount} />
+          <PurpleTimerRow>
+            <Row
+              testID="Purple.Row"
+              top={timerPurple.isTop ? 0 : TOP_MARGIN_PER_TWO}
+              totalCount={2}>
+              <Timer
+                testID="Purple.Timer"
+                status={timerPurple.status}
+                onPress={timerPurple.flip}
+                countdown={countdownPurple}
+                disabled={timerPurple.flipCount >= 3}
+              />
+            </Row>
+          </PurpleTimerRow>
         </PurpleSection>
         <GreenSection>
           <Row
@@ -43,6 +54,11 @@ const HomeScreen = () => {
         </GreenSection>
       </Top>
       <Bottom>
+        <Buttons>
+          <ResetButton mode="contained" onPress={reset}>
+            Reset
+          </ResetButton>
+        </Buttons>
         <BlackSection>
           <Row
             testID="Black.Row"
@@ -70,7 +86,7 @@ const Screen = styled.View`
 const PurpleSection = styled.View`
   flex: 1;
   background-color: purple;
-  align-items: flex-end;
+  flex-direction: row;
   padding-right: 16px;
 `;
 
@@ -101,4 +117,19 @@ const Bottom = styled.View`
 const Row = styled.View<{top: number; totalCount: number}>`
   flex: ${({totalCount}) => 1 / totalCount};
   top: ${({top}) => top + 'px'};
+`;
+
+const PurpleTimerRow = styled.View`
+  flex: 1;
+  margin-left: -24px;
+`;
+
+const Buttons = styled.View`
+  flex: 1;
+  background-color: grey;
+  justify-content: flex-end;
+`;
+
+const ResetButton = styled(Button)`
+  margin: 8px 8px 8px 8px;
 `;

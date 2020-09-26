@@ -3,8 +3,8 @@ import {Colors, IconButton} from 'react-native-paper';
 import styled from 'styled-components/native';
 import getMinSec from './get-min-sec';
 
-const Timer = ({status, onPress, countdown, testID}: any) => {
-  const isEnabled = status === 'FULL';
+const Timer = ({status, onPress, countdown, testID, disabled = false}: any) => {
+  const isEnabled = !disabled && status === 'FULL';
   return (
     <TimerContainer onTouchEnd={() => isEnabled && onPress()}>
       <Hourglass

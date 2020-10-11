@@ -19,6 +19,20 @@ const HomeScreen = () => {
     timerBlack.reset();
   };
 
+  const canStartAll =
+    timerPurple.flipCount === 0 &&
+    timerPurple.status === 'FULL' &&
+    timerGreen.status === 'FULL' &&
+    timerBlack.status === 'FULL';
+
+  const startAll = () => {
+    if (canStartAll) {
+      timerPurple.flip();
+      timerGreen.flip();
+      timerBlack.flip();
+    }
+  };
+
   return (
     <Screen>
       <Top>
@@ -55,6 +69,12 @@ const HomeScreen = () => {
       </Top>
       <Bottom>
         <Buttons>
+          <ResetButton
+            mode="contained"
+            onPress={startAll}
+            disabled={!canStartAll}>
+            Start All
+          </ResetButton>
           <ResetButton mode="contained" onPress={reset}>
             Reset
           </ResetButton>

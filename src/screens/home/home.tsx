@@ -22,7 +22,12 @@ const HomeScreen = () => {
   return (
     <Screen>
       <Top>
-        <PurpleSection>
+        <PurpleSection
+          onTouchEnd={() =>
+            timerPurple.status === 'FULL' &&
+            timerPurple.flipCount < 3 &&
+            timerPurple.flip()
+          }>
           <FlipTracker count={timerPurple.flipCount} />
           <PurpleTimerRow>
             <Row
@@ -32,14 +37,14 @@ const HomeScreen = () => {
               <Timer
                 testID="Purple.Timer"
                 status={timerPurple.status}
-                onPress={timerPurple.flip}
                 countdown={countdownPurple}
                 disabled={timerPurple.flipCount >= 3}
               />
             </Row>
           </PurpleTimerRow>
         </PurpleSection>
-        <GreenSection>
+        <GreenSection
+          onTouchEnd={() => timerGreen.status === 'FULL' && timerGreen.flip()}>
           <Row
             testID="Green.Row"
             top={timerGreen.isTop ? 0 : TOP_MARGIN_PER_TWO}
@@ -47,7 +52,6 @@ const HomeScreen = () => {
             <Timer
               testID="Green.Timer"
               status={timerGreen.status}
-              onPress={timerGreen.flip}
               countdown={countdownGreen}
             />
           </Row>
@@ -59,7 +63,8 @@ const HomeScreen = () => {
             Reset
           </ResetButton>
         </Buttons>
-        <BlackSection>
+        <BlackSection
+          onTouchEnd={() => timerBlack.status === 'FULL' && timerBlack.flip()}>
           <Row
             testID="Black.Row"
             top={timerBlack.isTop ? 0 : TOP_MARGIN_PER_TWO}
@@ -102,6 +107,7 @@ const BlackSection = styled.View`
   background-color: grey;
   align-items: flex-end;
   padding-right: 16px;
+  margin-left: 16px;
 `;
 
 const Top = styled.View`
@@ -126,7 +132,7 @@ const PurpleTimerRow = styled.View`
 
 const Buttons = styled.View`
   flex: 1;
-  background-color: grey;
+  background-color: white;
   justify-content: flex-end;
 `;
 

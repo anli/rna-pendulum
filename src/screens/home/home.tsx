@@ -30,6 +30,7 @@ const HomeScreen = () => {
           }>
           <FlipTracker count={timerPurple.flipCount} />
           <PurpleTimerRow>
+            <Line />
             <Row
               testID="Purple.Row"
               top={timerPurple.isTop ? 0 : TOP_MARGIN_PER_TWO}
@@ -45,16 +46,21 @@ const HomeScreen = () => {
         </PurpleSection>
         <GreenSection
           onTouchEnd={() => timerGreen.status === 'FULL' && timerGreen.flip()}>
-          <Row
-            testID="Green.Row"
-            top={timerGreen.isTop ? 0 : TOP_MARGIN_PER_TWO}
-            totalCount={2}>
-            <Timer
-              testID="Green.Timer"
-              status={timerGreen.status}
-              countdown={countdownGreen}
-            />
-          </Row>
+          <Container>
+            <Line />
+
+            <Row
+              testID="Green.Row"
+              top={timerGreen.isTop ? 0 : TOP_MARGIN_PER_TWO}
+              totalCount={2}>
+              <Timer
+                testID="Green.Timer"
+                status={timerGreen.status}
+                onPress={timerGreen.flip}
+                countdown={countdownGreen}
+              />
+            </Row>
+          </Container>
         </GreenSection>
       </Top>
       <Bottom>
@@ -65,17 +71,20 @@ const HomeScreen = () => {
         </Buttons>
         <BlackSection
           onTouchEnd={() => timerBlack.status === 'FULL' && timerBlack.flip()}>
-          <Row
-            testID="Black.Row"
-            top={timerBlack.isTop ? 0 : TOP_MARGIN_PER_TWO}
-            totalCount={2}>
-            <Timer
-              testID="Black.Timer"
-              status={timerBlack.status}
-              onPress={timerBlack.flip}
-              countdown={countdownBlack}
-            />
-          </Row>
+          <Container>
+            <Line />
+            <Row
+              testID="Black.Row"
+              top={timerBlack.isTop ? 0 : TOP_MARGIN_PER_TWO}
+              totalCount={2}>
+              <Timer
+                testID="Black.Timer"
+                status={timerBlack.status}
+                onPress={timerBlack.flip}
+                countdown={countdownBlack}
+              />
+            </Row>
+          </Container>
         </BlackSection>
       </Bottom>
     </Screen>
@@ -138,4 +147,17 @@ const Buttons = styled.View`
 
 const ResetButton = styled(Button)`
   margin: 8px 8px 8px 8px;
+`;
+
+const Line = styled.View`
+  border-bottom-color: white;
+  border-bottom-width: 1px;
+  top: 50%;
+  width: 100px;
+  align-self: center;
+  margin-left: 24px;
+`;
+
+const Container = styled.View`
+  flex: 1;
 `;

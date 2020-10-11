@@ -4,9 +4,15 @@ import useCountdown from './use-countdown';
 export type Status = 'FULL' | 'RUNNING';
 
 const useTimer = (countdownSecond: number) => {
-  const {time: countdown, start, reset: countdownReset} = useCountdown(
-    countdownSecond,
-  );
+  const {
+    time: countdown,
+    start,
+    reset: countdownReset,
+    pause,
+    isPause,
+    resume,
+    canPause,
+  } = useCountdown(countdownSecond);
 
   const [isTop, setIsTop] = useState<boolean>(true);
   const [status, setStatus] = useState<Status>('FULL');
@@ -30,6 +36,10 @@ const useTimer = (countdownSecond: number) => {
       setFlipCount(0);
       countdownReset();
     },
+    pause,
+    isPause,
+    resume,
+    canPause,
   };
 
   return {timer, countdown};

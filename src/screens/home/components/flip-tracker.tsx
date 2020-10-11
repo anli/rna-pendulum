@@ -13,8 +13,9 @@ const FlipTracker = ({count}: {count: number}) => {
 
   return (
     <FlipTrackerContainer>
-      {trackers.map(({counter, top}) => (
+      {trackers.map(({counter, top}, index) => (
         <Tracker
+          key={index}
           icon={count < counter ? 'circle' : 'circle-outline'}
           color={Colors.white}
           size={16}

@@ -19,6 +19,24 @@ const HomeScreen = () => {
     timerBlack.reset();
   };
 
+  const isPause =
+    timerPurple.isPause || timerGreen.isPause || timerBlack.isPause;
+
+  const canPause =
+    timerPurple.canPause || timerGreen.canPause || timerBlack.canPause;
+
+  const pause = () => {
+    timerPurple.pause();
+    timerGreen.pause();
+    timerBlack.pause();
+  };
+
+  const resume = () => {
+    timerPurple.canPause && timerPurple.isPause && timerPurple.resume();
+    timerGreen.canPause && timerGreen.isPause && timerGreen.resume();
+    timerBlack.canPause && timerBlack.isPause && timerBlack.resume();
+  };
+
   const canStartAll =
     timerPurple.flipCount === 0 &&
     timerPurple.status === 'FULL' &&
@@ -79,6 +97,16 @@ const HomeScreen = () => {
       </Top>
       <Bottom>
         <Buttons>
+          {canPause && isPause && (
+            <ResetButton mode="contained" onPress={resume}>
+              Resume All
+            </ResetButton>
+          )}
+          {canPause && !isPause && (
+            <ResetButton mode="contained" onPress={pause} color="red">
+              Pause All
+            </ResetButton>
+          )}
           <ResetButton
             mode="contained"
             onPress={startAll}
